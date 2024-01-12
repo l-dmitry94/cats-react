@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/cats-react/static/css/main.b87514ff.css",
+    "main.js": "/cats-react/static/js/main.5a9bc161.js",
+    "index.html": "/cats-react/index.html",
+    "main.b87514ff.css.map": "/cats-react/static/css/main.b87514ff.css.map",
+    "main.5a9bc161.js.map": "/cats-react/static/js/main.5a9bc161.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b87514ff.css",
+    "static/js/main.5a9bc161.js"
+  ]
+}
