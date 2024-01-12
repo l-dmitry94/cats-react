@@ -5,9 +5,9 @@ import CatInfo from 'components/CatInfo';
 
 const App = () => {
     const [cats, setCats] = useState([]);
-    const [selectedBreed, setSelectedBreed] = useState('');
+    const [referenceImageId, setReferenceImageId] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
+    const [cat, setCat] = useState(null)
     useEffect(() => {
         setIsLoading(true);
         const allBreeds = async () => {
@@ -25,25 +25,36 @@ const App = () => {
     }, []);
 
     useEffect(() => {
+        setIsLoading(true);
         const selectedCat = async () => {
-            if (selectedBreed) {
-                const data = await fetchCatByBreed(selectedBreed);
-
-                console.log(data);
+            try {
+                if (referenceImageId) {
+                    const data = await fetchCatByBreed(referenceImageId);
+                    setCat(data)
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.log(error);
             }
         };
         selectedCat();
-    }, [selectedBreed]);
+    }, [referenceImageId]);
 
     const chooseCat = breedId => {
-        setSelectedBreed(breedId);
+        setReferenceImageId(breedId);
     };
 
     return (
         <>
-            {isLoading && <p>Loading...</p>}
-            <Select cats={cats} onChooseCat={chooseCat} />
-            <CatInfo />
+            {isLoading && <b>Loading data, please wait...</b>}
+            {!isLoading && (
+                <Select
+                    cats={cats}
+                    onChooseCat={chooseCat}
+                    selectedBreed={referenceImageId}
+                />
+            )}
+            {cat && <CatInfo cat={cat}/>}
         </>
     );
 };

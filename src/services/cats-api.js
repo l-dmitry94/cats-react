@@ -10,6 +10,6 @@ export const fetchBreeds = async () => {
 };
 
 export const fetchCatByBreed = async breedId => {
-    const { data } = await instance(`/images/search?breed_ids=${breedId}`);
+    const { data } = await instance(`/images/${breedId}`);
     return data;
 };
