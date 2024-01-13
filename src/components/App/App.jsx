@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { fetchBreeds, fetchCatByBreed } from 'services/cats-api';
-import Select from 'components/Select';
+import SelectWrapper from 'components/Select';
 import CatInfo from 'components/CatInfo';
 
 const App = () => {
     const [cats, setCats] = useState([]);
     const [referenceImageId, setReferenceImageId] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [cat, setCat] = useState(null)
+    const [cat, setCat] = useState(null);
     useEffect(() => {
         setIsLoading(true);
         const allBreeds = async () => {
@@ -30,7 +30,7 @@ const App = () => {
             try {
                 if (referenceImageId) {
                     const data = await fetchCatByBreed(referenceImageId);
-                    setCat(data)
+                    setCat(data);
                     setIsLoading(false);
                 }
             } catch (error) {
@@ -46,15 +46,16 @@ const App = () => {
 
     return (
         <>
-            {isLoading && <b>Loading data, please wait...</b>}
-            {!isLoading && (
-                <Select
-                    cats={cats}
-                    onChooseCat={chooseCat}
-                    selectedBreed={referenceImageId}
-                />
+            <SelectWrapper
+                cats={cats}
+                onChooseCat={chooseCat}
+                referenceImageId={referenceImageId}
+            />
+
+            {isLoading && (
+                <b style={{ display: 'block' }}>Loading data, please wait...</b>
             )}
-            {cat && <CatInfo cat={cat}/>}
+            {!isLoading && cat && <CatInfo cat={cat} />}
         </>
     );
 };
